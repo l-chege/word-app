@@ -11,3 +11,18 @@ app = Flask(__name__)
 openai.api.key = os.getenv("OPENAI_API_KEY")
 twilio_client = Client(os.getenv("TWILIO_ACCOUNT_SID"), os.getenv("TWILIO_AUTH_TOKEN"))
 twilio_phone_number = os.getenv("TWILIO_PHONE_NUMBER")
+
+# static list of affirmations
+affirmations = [
+    "You are capable of amazing things!",
+    "You are enough!",
+    "You are loved!",
+    "You are doing great!",
+    "You are strong!",
+    "You are worthy of happiness!",
+    "You are a unique and special individual!"
+]
+
+# function to generate random affirmation
+def generate_affirmation():
+    return random.choice(affirmations)

@@ -26,3 +26,27 @@ affirmations = [
 # function to generate random affirmation
 def generate_affirmation():
     return random.choice(affirmations)
+
+# renders index.html template
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+# triggered when user submits a form with their phone number
+@app.route('/send_affirmation', methods=['POST'])
+def send_affirmation():
+    recipient_number = request.form['phone_number']
+    affirmation = generate_affirmation()
+
+    try:
+        message = twilio_client.messages.create(
+            body=affirmation,
+            from_=twilio_phone_number,
+            to=recipient_number
+        )
+        return "Affirmation sent successfully!"
+    except Exception as e:
+        return str(e)
+
+if __name__ == '__main__':
+    app.run(debug=True)
